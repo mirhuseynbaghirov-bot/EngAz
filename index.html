@@ -4,131 +4,617 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#110d20">
 <title>EngAZ — Learn English</title>
+
 <style>
-:root {
-  --bg:#110d20;
-  --card:#211936;
-  --purple:#8c70ff;
-  --green:#baff91;
-  --white:#ffffff;
-  --muted:#aaa3bd;
+:root{
+--bg:#110d20;--card:#211936;--purple:#8c70ff;
+--green:#baff91;--white:#fff;--muted:#aaa3bd;
+--line:#382b50;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;
-  background:var(--bg);
-  color:var(--white);
-  font-family:Arial,sans-serif;
+margin:0;background:var(--bg);color:var(--white);
+font-family:Arial,sans-serif;
 }
 header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:22px 7%;
-  border-bottom:1px solid #302546;
+display:flex;justify-content:space-between;align-items:center;
+padding:20px 7%;border-bottom:1px solid #302546;
+position:sticky;top:0;background:#110d20ed;z-index:5;
 }
 .logo{font-size:27px;font-weight:900}
 .logo span{color:var(--green)}
+.header-right{display:flex;align-items:center;gap:12px}
 .profile{
-  background:var(--card);
-  padding:10px 17px;
-  border-radius:30px;
+background:var(--card);padding:10px 15px;
+border-radius:30px;cursor:pointer;
 }
-main{max-width:1100px;margin:auto;padding:35px 20px}
+main{max-width:1100px;margin:auto;padding:30px 20px}
 .hero{
-  background:linear-gradient(120deg,#30204e,#211936);
-  padding:35px;
-  border-radius:25px;
-  border:1px solid #44345e;
+background:linear-gradient(120deg,#30204e,#211936);
+padding:35px;border-radius:25px;border:1px solid #44345e;
 }
-.hero small{color:var(--green);font-weight:bold}
+.hero small,.tag{color:var(--green);font-weight:bold}
 h1{font-size:40px;margin:15px 0}
 p{color:var(--muted);line-height:1.6}
 button{
-  background:var(--green);
-  color:#171126;
-  border:0;
-  padding:14px 22px;
-  border-radius:12px;
-  font-weight:bold;
-  cursor:pointer;
+background:var(--green);color:#171126;border:0;
+padding:13px 19px;border-radius:12px;
+font-weight:bold;cursor:pointer;
 }
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin-top:22px;
+button:disabled{opacity:.5;cursor:not-allowed}
+.secondary{
+background:#302448;color:white;border:1px solid #57436f;
 }
-.card{
-  background:var(--card);
-  padding:20px;
-  border-radius:17px;
-  border:1px solid #382b50;
+.stats,.levels{
+display:grid;grid-template-columns:repeat(3,1fr);
+gap:15px;margin-top:22px;
+}
+.card,.level{
+background:var(--card);padding:20px;
+border-radius:17px;border:1px solid var(--line);
 }
 .card h2{color:var(--green)}
-.levels{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-  margin-top:20px;
-}
-.level{
-  background:var(--card);
-  padding:22px;
-  border-radius:18px;
-  border:1px solid #382b50;
-}
-.level:hover{border-color:var(--green)}
+.level{cursor:pointer;transition:.2s}
+.level:hover,.level.selected{border-color:var(--green);transform:translateY(-2px)}
 .level h3{color:var(--green)}
-@media(max-width:600px){
-  .stats{grid-template-columns:1fr}
-  .levels{grid-template-columns:1fr}
-  h1{font-size:31px}
+.level p{font-size:13px}
+.level-top{display:flex;justify-content:space-between}
+.level-icon{font-size:25px}
+.progress{
+height:7px;background:#403650;border-radius:20px;
+overflow:hidden;margin-top:13px;
+}
+.progress span{
+display:block;height:100%;background:var(--green);
+}
+.level-info{font-size:12px;color:var(--muted);margin-top:8px}
+.section-title{margin-top:38px}
+.lesson-grid{
+display:grid;grid-template-columns:repeat(2,1fr);
+gap:14px;margin-top:18px;
+}
+.lesson-card{
+background:var(--card);border:1px solid var(--line);
+padding:20px;border-radius:17px;
+}
+.lesson-card h3{margin-top:8px}
+.lesson-card p{font-size:13px}
+.lesson-card .done{color:var(--green)}
+.screen{
+display:none;max-width:750px;margin:30px auto;
+background:var(--card);border:1px solid var(--line);
+padding:25px;border-radius:22px;
+}
+.screen.active{display:block}
+.word-box{
+background:#302448;border:1px solid #57436f;
+padding:30px 15px;text-align:center;
+border-radius:18px;margin:20px 0;
+}
+.word-box h2{font-size:35px;margin:10px 0;color:var(--green)}
+.translation{font-size:19px}
+.example{font-size:14px;color:var(--muted);margin-top:15px}
+.answer{
+display:block;width:100%;text-align:left;margin:10px 0;
+background:#302448;color:white;
+border:1px solid #57436f;border-radius:12px;
+}
+.answer.correct{border-color:var(--green);background:#253b30}
+.answer.wrong{border-color:#ff8297;background:#402535}
+.feedback{color:var(--green);font-weight:bold;min-height:25px;margin:15px 0}
+.bar{height:8px;background:#403650;border-radius:20px;margin:20px 0}
+.bar span{display:block;height:100%;background:var(--green);border-radius:20px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.modal{
+display:none;position:fixed;inset:0;background:#000b;
+z-index:10;place-items:center;padding:20px;
+}
+.modal.active{display:grid}
+.modal-box{
+background:var(--card);border:1px solid var(--line);
+padding:25px;border-radius:20px;width:100%;max-width:400px;
+}
+input{
+width:100%;padding:13px;background:#110d20;
+border:1px solid var(--line);border-radius:10px;
+color:white;margin:12px 0;
+}
+.notice{text-align:center;color:var(--muted);font-size:12px;margin:30px 0}
+@media(max-width:650px){
+.stats{grid-template-columns:1fr 1fr}
+.levels,.lesson-grid{grid-template-columns:1fr}
+h1{font-size:32px}
+header{padding:17px 15px}
+main{padding:20px 14px}
+.hero{padding:25px}
 }
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">Eng<span>AZ</span></div>
-  <div class="profile">👤 Mənim profilim</div>
+<div class="logo">Eng<span>AZ</span></div>
+<div class="header-right">
+<div class="profile" onclick="openProfile()">👤 <span id="userName">Profil</span></div>
+</div>
 </header>
-<main>
-  <section class="hero">
-    <small>WELCOME TO ENGAZ</small>
-    <h1>İngilis dilini<br>öz yolunla öyrən.</h1>
-    <p>Öyrən, inkişaf et və hər gün bir addım irəli get.</p>
-    <button onclick="alert('EngAZ dərsləri tezliklə!')">
-      Öyrənməyə başla →
-    </button>
-  </section>
 
-  <section class="stats">
-    <div class="card">
-      <p>Ümumi XP</p>
-      <h2>0 ⚡</h2>
-    </div>
-    <div class="card">
-      <p>Tamamlanan dərslər</p>
-      <h2>0 📚</h2>
-    </div>
-    <div class="card">
-      <p>Gündəlik seriya</p>
-      <h2>0 🔥</h2>
-    </div>
-  </section>
+<main id="home">
 
-  <h2 style="margin-top:40px">Öyrənmə xəritəsi</h2>
-  <p>Səviyyəni seç və inkişaf etməyə başla.</p>
+<section class="hero">
+<small>WELCOME TO ENGAZ</small>
+<h1>İngilis dilini<br>öz yolunla öyrən.</h1>
+<p>Hər gün yeni sözlər öyrən. Biliklərini yoxla. Səviyyəni yüksəlt.</p>
+<button onclick="document.getElementById('levelHeading').scrollIntoView({behavior:'smooth'})">
+Öyrənməyə başla →
+</button>
+</section>
 
-  <section class="levels">
-    <div class="level"><h3>A1</h3><h2>Beginner</h2><p>Başlanğıc səviyyə</p></div>
-    <div class="level"><h3>A2</h3><h2>Elementary</h2><p>İlkin biliklər</p></div>
-    <div class="level"><h3>B1</h3><h2>Intermediate</h2><p>Orta səviyyə</p></div>
-    <div class="level"><h3>B2</h3><h2>Upper Intermediate</h2><p>Yuxarı orta</p></div>
-    <div class="level"><h3>C1</h3><h2>Advanced</h2><p>İrəli səviyyə</p></div>
-    <div class="level"><h3>C2</h3><h2>Proficiency</h2><p>Ustalıq</p></div>
-  </section>
+<section class="stats">
+<div class="card"><p>Ümumi XP</p><h2 id="xp">0 ⚡</h2></div>
+<div class="card"><p>Tamamlanan dərslər</p><h2 id="completed">0 📚</h2></div>
+<div class="card"><p>Öyrənilən sözlər</p><h2 id="learned">0 📖</h2></div>
+</section>
+
+<h2 class="section-title" id="levelHeading">Öyrənmə xəritəsi</h2>
+<p>Səviyyəni seç və dərslərə başla.</p>
+
+<section class="levels" id="levels"></section>
+
+<h2 class="section-title" id="lessonHeading">Dərslər</h2>
+<p id="levelDescription">Başlamaq üçün A1 səviyyəsini seç.</p>
+<section class="lesson-grid" id="lessons"></section>
+
+<p class="notice">EngAZ · Learn something new every day. 💜</p>
 </main>
+
+<section class="screen" id="study">
+<button class="secondary" onclick="goHome()">← Geri</button>
+<div class="tag" id="studyTag">A1 · Dərs 1</div>
+<h2 id="studyTitle">Salamlaşma</h2>
+<p id="studyDescription">Yeni sözləri öyrən.</p>
+<div class="bar"><span id="studyProgress"></span></div>
+<div id="studyContent"></div>
+<div class="feedback" id="feedback"></div>
+<div class="actions">
+<button id="continueButton" onclick="continueStudy()">Davam et →</button>
+</div>
+</section>
+
+<div class="modal" id="profileModal">
+<div class="modal-box">
+<h2>👋 Xoş gəlmisən!</h2>
+<p>EngAZ profilini yarat.</p>
+<input id="nameInput" placeholder="Adını daxil et" maxlength="25">
+<button onclick="saveProfile()">Yadda saxla</button>
+<button class="secondary" onclick="closeProfile()">Bağla</button>
+</div>
+</div>
+
+<script>
+const levelData=[
+{
+code:"A1",name:"Beginner",desc:"Başlanğıc səviyyə",icon:"🌱",
+lessons:[
+{title:"Salamlaşma",words:[
+["Hello","Salam","Hello, my friend."],
+["Good morning","Sabahın xeyir","Good morning, everyone."],
+["Goodbye","Hələlik","Goodbye, see you soon."],
+["Please","Zəhmət olmasa","Please, help me."],
+["Thank you","Təşəkkür edirəm","Thank you very much."]
+]},
+{title:"Özünü təqdim et",words:[
+["Name","Ad","My name is Ali."],
+["Student","Tələbə","I am a student."],
+["Live","Yaşamaq","I live in Baku."],
+["Friend","Dost","He is my friend."],
+["Country","Ölkə","My country is Azerbaijan."]
+]}
+]
+},
+{
+code:"A2",name:"Elementary",desc:"İlkin biliklər",icon:"🌿",
+lessons:[
+{title:"Gündəlik həyat",words:[
+["Usually","Adətən","I usually wake up early."],
+["Sometimes","Bəzən","I sometimes read books."],
+["Always","Həmişə","She always studies."],
+["Never","Heç vaxt","I never smoke."],
+["Together","Birlikdə","We work together."]
+]},
+{title:"Səyahət",words:[
+["Journey","Səyahət","The journey was long."],
+["Airport","Hava limanı","We are at the airport."],
+["Ticket","Bilet","I need a ticket."],
+["Hotel","Otel","The hotel is beautiful."],
+["Visit","Ziyarət etmək","I visit my family."]
+]}
+]
+},
+{
+code:"B1",name:"Intermediate",desc:"Orta səviyyə",icon:"🌳",
+lessons:[
+{title:"Fikir və hisslər",words:[
+["Believe","İnanmaq","I believe in you."],
+["Imagine","Təsəvvür etmək","Imagine a better future."],
+["Decide","Qərar vermək","I decided to study."],
+["Improve","İnkişaf etdirmək","I want to improve."],
+["Experience","Təcrübə","It was a great experience."]
+]},
+{title:"İş həyatı",words:[
+["Opportunity","Fürsət","This is a good opportunity."],
+["Skill","Bacarıq","Communication is an important skill."],
+["Develop","İnkişaf etdirmək","We develop new ideas."],
+["Career","Karyera","She has a successful career."],
+["Challenge","Çətinlik","Every challenge teaches us."]
+]}
+]
+},
+{
+code:"B2",name:"Upper Intermediate",desc:"Yuxarı orta",icon:"🚀",
+lessons:[
+{title:"Biznes və texnologiya",words:[
+["Investment","İnvestisiya","Investment requires planning."],
+["Revenue","Gəlir","The company increased its revenue."],
+["Strategy","Strategiya","We need a new strategy."],
+["Consumer","İstehlakçı","The consumer needs quality."],
+["Innovation","Yenilik","Innovation changes the world."]
+]},
+{title:"Cəmiyyət",words:[
+["Environment","Ətraf mühit","We should protect the environment."],
+["Opportunity","İmkan","Education creates opportunity."],
+["Influence","Təsir","Social media has influence."],
+["Research","Araşdırma","Research takes time."],
+["Development","İnkişaf","Development is important."]
+]}
+]
+},
+{
+code:"C1",name:"Advanced",desc:"İrəli səviyyə",icon:"🏆",
+lessons:[
+{title:"Akademik sözlər",words:[
+["Significant","Əhəmiyyətli","This is a significant result."],
+["Nevertheless","Buna baxmayaraq","Nevertheless, we continued."],
+["Consequently","Nəticədə","Consequently, prices increased."],
+["Furthermore","Bundan əlavə","Furthermore, we need evidence."],
+["Approach","Yanaşma","We need a different approach."]
+]},
+{title:"Peşəkar ünsiyyət",words:[
+["Negotiate","Danışıqlar aparmaq","We need to negotiate."],
+["Implement","Tətbiq etmək","They implemented the plan."],
+["Efficient","Səmərəli","This is an efficient method."],
+["Relevant","Aidiyyəti olan","The information is relevant."],
+["Prioritize","Prioritet vermək","We must prioritize our goals."]
+]}
+]
+},
+{
+code:"C2",name:"Proficiency",desc:"Ustalıq səviyyəsi",icon:"👑",
+lessons:[
+{title:"İrəli ifadələr",words:[
+["Meticulous","Çox diqqətli","She is meticulous in her work."],
+["Ambiguous","Qeyri-müəyyən","The statement was ambiguous."],
+["Inevitable","Qaçılmaz","Change is inevitable."],
+["Compelling","Cəlbedici / inandırıcı","He gave a compelling argument."],
+["Resilient","Dözümlü","A resilient person keeps learning."]
+]},
+{title:"Mürəkkəb sözlər",words:[
+["Nevertheless","Buna baxmayaraq","Nevertheless, it worked."],
+["Substantial","Əhəmiyyətli / böyük","There was substantial progress."],
+["Intricate","Mürəkkəb","It is an intricate system."],
+["Reluctant","İstəksiz","He was reluctant to agree."],
+["Sustainable","Davamlı","We need sustainable solutions."]
+]}
+]
+}
+];
+
+let saved={};
+try{
+saved=JSON.parse(localStorage.getItem("engazData")||"{}");
+}catch(e){saved={};}
+
+saved.xp=saved.xp||0;
+saved.completed=saved.completed||[];
+saved.words=saved.words||[];
+saved.name=saved.name||"";
+saved.lastDay=saved.lastDay||"";
+saved.streak=saved.streak||0;
+
+let selectedLevel=0;
+let currentLesson=0;
+let currentStep=0;
+let quizIndex=0;
+let quizScore=0;
+let answered=false;
+let mode="words";
+
+function persist(){
+localStorage.setItem("engazData",JSON.stringify(saved));
+}
+
+function today(){
+return new Date().toLocaleDateString("en-CA");
+}
+
+function updateStats(){
+document.getElementById("xp").textContent=saved.xp+" ⚡";
+document.getElementById("completed").textContent=saved.completed.length+" 📚";
+document.getElementById("learned").textContent=saved.words.length+" 📖";
+document.getElementById("userName").textContent=saved.name||"Profil";
+}
+
+function renderLevels(){
+const area=document.getElementById("levels");
+area.innerHTML="";
+
+levelData.forEach((level,index)=>{
+const total=level.lessons.length;
+const done=level.lessons.filter((lesson,i)=>
+saved.completed.includes(index+"-"+i)
+).length;
+
+const div=document.createElement("div");
+div.className="level"+(selectedLevel===index?" selected":"");
+div.innerHTML=`
+<div class="level-top">
+<span class="tag">${level.code}</span>
+<span class="level-icon">${level.icon}</span>
+</div>
+<h3>${level.name}</h3>
+<p>${level.desc}</p>
+<div class="progress"><span style="width:${done/total*100}%"></span></div>
+<div class="level-info">${done}/${total} dərs tamamlanıb</div>
+`;
+div.onclick=()=>selectLevel(index);
+area.appendChild(div);
+});
+}
+
+function selectLevel(index){
+selectedLevel=index;
+renderLevels();
+renderLessons();
+document.getElementById("lessonHeading").scrollIntoView({behavior:"smooth"});
+}
+
+function renderLessons(){
+const level=levelData[selectedLevel];
+document.getElementById("levelDescription").textContent=
+level.code+" · "+level.name+" — dərsini seç.";
+
+const area=document.getElementById("lessons");
+area.innerHTML="";
+
+level.lessons.forEach((lesson,index)=>{
+const done=saved.completed.includes(selectedLevel+"-"+index);
+const div=document.createElement("div");
+div.className="lesson-card";
+div.innerHTML=`
+<div class="tag">${level.code} · DƏRS ${index+1}</div>
+<h3>${lesson.title}</h3>
+<p>5 yeni söz · Nümunə cümlələr · Test</p>
+<p class="${done?'done':''}">${done?'✓ Tamamlandı':'📖 Öyrənməyə hazırdır'}</p>
+<button>${done?'Yenidən öyrən':'Dərsə başla →'}</button>
+`;
+div.querySelector("button").onclick=()=>startLesson(index);
+area.appendChild(div);
+});
+}
+
+function startLesson(index){
+currentLesson=index;
+currentStep=0;
+mode="words";
+document.getElementById("home").style.display="none";
+document.getElementById("study").classList.add("active");
+showStep();
+}
+
+function showStep(){
+const lesson=levelData[selectedLevel].lessons[currentLesson];
+document.getElementById("studyTag").textContent=
+levelData[selectedLevel].code+" · Dərs "+(currentLesson+1);
+document.getElementById("studyTitle").textContent=lesson.title;
+
+const progress=mode==="words"?currentStep/6*100:
+(5+quizIndex)/10*100;
+document.getElementById("studyProgress").style.width=progress+"%";
+
+if(mode==="words"){
+document.getElementById("studyDescription").textContent=
+"Yeni sözləri öyrən və nümunələrə diqqət et.";
+
+if(currentStep<5){
+const word=lesson.words[currentStep];
+document.getElementById("studyContent").innerHTML=`
+<div class="word-box">
+<div class="tag">SÖZ ${currentStep+1} / 5</div>
+<h2>${word[0]}</h2>
+<div class="translation">${word[1]}</div>
+<div class="example">${word[2]}</div>
+</div>
+<button class="secondary" onclick="speak()">🔊 Tələffüz et</button>
+`;
+document.getElementById("continueButton").textContent=
+currentStep===4?"Testə keç →":"Növbəti söz →";
+}else{
+mode="quiz";
+quizIndex=0;
+quizScore=0;
+showStep();
+return;
+}
+}else{
+document.getElementById("studyDescription").textContent=
+"Doğru cavabı seç. Hər düzgün cavab 1 xal qazandırır.";
+answered=false;
+const word=lesson.words[quizIndex];
+const distractors=lesson.words.filter((w,i)=>i!==quizIndex);
+const options=[word[1],distractors[(quizIndex)%4][1],distractors[(quizIndex+1)%4][1]];
+const shuffled=options.sort(()=>Math.random()-.5);
+
+document.getElementById("studyContent").innerHTML=`
+<div class="word-box">
+<div class="tag">SUAL ${quizIndex+1} / 5</div>
+<h2>${word[0]}</h2>
+<div class="example">Bu sözün Azərbaycan dilində mənası hansıdır?</div>
+</div>
+<div id="answerList"></div>
+`;
+shuffled.forEach(option=>{
+const btn=document.createElement("button");
+btn.className="answer";
+btn.textContent=option;
+btn.onclick=()=>checkAnswer(btn,option,word[1]);
+document.getElementById("answerList").appendChild(btn);
+});
+document.getElementById("continueButton").textContent="Növbəti sual →";
+}
+document.getElementById("feedback").textContent="";
+}
+
+function speak(){
+const word=levelData[selectedLevel].lessons[currentLesson].words[currentStep][0];
+if(!("speechSynthesis" in window)){
+alert("Tələffüz bu brauzerdə dəstəklənmir.");
+return;
+}
+speechSynthesis.cancel();
+const utterance=new SpeechSynthesisUtterance(word);
+utterance.lang="en-US";
+speechSynthesis.speak(utterance);
+}
+
+function checkAnswer(button,answer,correct){
+if(answered)return;
+answered=true;
+const buttons=document.querySelectorAll(".answer");
+buttons.forEach(b=>b.disabled=true);
+
+if(answer===correct){
+quizScore++;
+button.classList.add("correct");
+document.getElementById("feedback").textContent="Əla! Düzgün cavabdır. 🎉";
+}else{
+button.classList.add("wrong");
+buttons.forEach(b=>{
+if(b.textContent===correct)b.classList.add("correct");
+});
+document.getElementById("feedback").textContent=
+"Düzgün cavab: "+correct;
+}
+}
+
+function continueStudy(){
+if(mode==="words"){
+if(currentStep<4){
+currentStep++;
+showStep();
+}else{
+currentStep=5;
+mode="quiz";
+quizIndex=0;
+showStep();
+}
+return;
+}
+
+if(!answered){
+document.getElementById("feedback").textContent="Əvvəlcə cavab seç.";
+return;
+}
+
+if(quizIndex<4){
+quizIndex++;
+showStep();
+}else{
+finishLesson();
+}
+}
+
+function finishLesson(){
+const key=selectedLevel+"-"+currentLesson;
+if(!saved.completed.includes(key)){
+saved.completed.push(key);
+saved.xp+=20;
+const words=levelData[selectedLevel].lessons[currentLesson].words;
+words.forEach(w=>{
+if(!saved.words.includes(w[0]))saved.words.push(w[0]);
+});
+const current=today();
+if(saved.lastDay!==current){
+const yesterday=new Date();
+yesterday.setDate(yesterday.getDate()-1);
+const yesterdayText=yesterday.toLocaleDateString("en-CA");
+saved.streak=saved.lastDay===yesterdayText?saved.streak+1:1;
+saved.lastDay=current;
+}
+persist();
+}
+document.getElementById("studyTitle").textContent="Dərs tamamlandı! 🎉";
+document.getElementById("studyDescription").textContent=
+"Nəticən: "+quizScore+"/5 düzgün cavab.";
+document.getElementById("studyContent").innerHTML=`
+<div class="word-box">
+<h2>+20 XP ⚡</h2>
+<div class="translation">${quizScore} / 5 düzgün cavab</div>
+<div class="example">Davam et və yeni sözlər öyrən!</div>
+</div>
+`;
+document.getElementById("studyProgress").style.width="100%";
+document.getElementById("feedback").textContent="Təbriklər! 💚";
+document.getElementById("continueButton").textContent="Dərslərə qayıt";
+document.getElementById("continueButton").onclick=()=>{
+document.getElementById("continueButton").onclick=continueStudy;
+goHome();
+};
+updateStats();
+renderLevels();
+renderLessons();
+}
+
+function goHome(){
+document.getElementById("study").classList.remove("active");
+document.getElementById("home").style.display="block";
+document.getElementById("continueButton").onclick=continueStudy;
+renderLevels();
+renderLessons();
+updateStats();
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function openProfile(){
+document.getElementById("nameInput").value=saved.name;
+document.getElementById("profileModal").classList.add("active");
+}
+
+function closeProfile(){
+document.getElementById("profileModal").classList.remove("active");
+}
+
+function saveProfile(){
+const name=document.getElementById("nameInput").value.trim();
+if(!name){
+alert("Zəhmət olmasa adını yaz.");
+return;
+}
+saved.name=name;
+persist();
+updateStats();
+closeProfile();
+}
+
+renderLevels();
+renderLessons();
+updateStats();
+
+if(!saved.name){
+openProfile();
+}
+</script>
 </body>
 </html>
