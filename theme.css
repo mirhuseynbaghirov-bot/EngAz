@@ -1,0 +1,140 @@
+/* EngAZ premium tema. index.html-in <style> blokundan SONRA yüklənir. */
+:root{--glow:0 10px 40px -12px #8c70ff88;--r:22px}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(800px 500px at 85% -10%,#8c70ff2e,transparent 60%),
+    radial-gradient(700px 500px at -10% 30%,#baff9112,transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+header{padding-top:max(14px,env(safe-area-inset-top));background:#110d20cc;backdrop-filter:blur(18px) saturate(140%)}
+.logo{background:linear-gradient(90deg,#fff,#cfc2ff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px}
+.logo span{background:linear-gradient(90deg,var(--green),#7dffb5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.profile{background:linear-gradient(135deg,#2b2145,#211936);transition:.25s}
+.profile:hover{border-color:var(--purple);box-shadow:var(--glow)}
+
+/* Hero */
+.hero{
+  border-radius:28px;border:1px solid #5b47a355;
+  background:linear-gradient(135deg,#3b2a6e 0%,#2a1f4a 45%,#211936 100%);
+  box-shadow:0 20px 60px -25px #8c70ffaa,inset 0 1px 0 #ffffff14;
+}
+.hero:before{content:"";position:absolute;width:260px;height:260px;right:-60px;bottom:-90px;
+  background:radial-gradient(circle,#baff9133,transparent 65%);pointer-events:none}
+.hero h1{letter-spacing:-1px;line-height:1.1}
+.hero small{letter-spacing:2px;font-size:11px}
+
+/* Düymələr */
+button{
+  background:linear-gradient(135deg,#c6ffa3,var(--green));
+  border-radius:14px;padding:14px 20px;min-height:46px;
+  box-shadow:0 8px 24px -10px #baff9199;
+  transition:transform .15s,box-shadow .2s,filter .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+button:hover:not(:disabled){filter:brightness(1.06);box-shadow:0 12px 28px -10px #baff91bb}
+button:active{transform:scale(.96)}
+.secondary{background:linear-gradient(135deg,#352853,#2b2145);box-shadow:none;border-color:#5b47a3}
+.secondary:hover:not(:disabled){border-color:var(--purple);box-shadow:var(--glow)}
+
+/* Kartlar */
+.card,.level,.achievement,.lesson-card,.xp-panel{
+  border-radius:var(--r);
+  background:linear-gradient(160deg,#271d40,#211936);
+  border:1px solid #3a2d58;
+  box-shadow:0 10px 30px -18px #000;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.stats .card{text-align:left;position:relative;overflow:hidden}
+.stats .card:after{content:"";position:absolute;right:-20px;top:-20px;width:70px;height:70px;border-radius:50%;
+  background:radial-gradient(circle,#8c70ff30,transparent 70%)}
+.card-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;
+  background:#8c70ff22;font-size:21px;margin-bottom:8px}
+.card h2{font-size:26px;margin:4px 0 0;letter-spacing:-.5px}
+.level:hover,.level.selected,.lesson-card:hover{
+  border-color:var(--purple);box-shadow:var(--glow);transform:translateY(-4px)}
+.level.selected{background:linear-gradient(160deg,#33265a,#241a3d)}
+.lesson-card{display:flex;flex-direction:column}
+.lesson-card button{margin-top:auto}
+.achievement.unlocked{background:linear-gradient(160deg,#2c3a3a,#211936);box-shadow:0 0 28px -10px #baff9199}
+.achievement-icon{font-size:30px}
+
+/* Progress */
+.progress,.bar{background:#ffffff14;height:10px}
+.progress span,.bar span{
+  background:linear-gradient(90deg,var(--purple),var(--green));
+  box-shadow:0 0 14px #baff9166;border-radius:20px;
+  transition:width .7s cubic-bezier(.2,.8,.2,1);
+}
+.section-title{font-size:22px;letter-spacing:-.3px}
+
+/* Dərs və test ekranı */
+.screen{
+  border-radius:28px;background:linear-gradient(170deg,#271d40,#211936);
+  box-shadow:0 30px 80px -40px #000,inset 0 1px 0 #ffffff10;
+}
+.word-box{
+  border-radius:22px;border:1px solid #5b47a366;
+  background:radial-gradient(circle at 50% 0%,#4a3a7e55,#2b2145 70%);
+}
+.word-box h2{font-size:38px;letter-spacing:-.5px;text-shadow:0 0 30px #baff9144}
+.answer{
+  background:linear-gradient(135deg,#352853,#2b2145);
+  border-radius:16px;padding:16px;font-size:16px;font-weight:600;box-shadow:none;
+}
+.answer.correct{box-shadow:0 0 24px -6px #baff91aa}
+.answer.wrong{box-shadow:0 0 24px -6px #ff8297aa}
+
+/* Modal və input */
+.modal{backdrop-filter:blur(8px);background:#05030cc4}
+.modal-box{border-radius:26px;background:linear-gradient(170deg,#2b2145,#211936);box-shadow:0 30px 80px -20px #000}
+.modal.active .modal-box{animation:screenEnter .3s ease}
+input,select{font-size:16px;border-radius:14px;background:#150f27;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus{outline:0;border-color:var(--purple);box-shadow:0 0 0 3px #8c70ff33}
+
+/* Toast */
+#toast{border-radius:30px;bottom:max(25px,env(safe-area-inset-bottom));
+  background:linear-gradient(135deg,#c6ffa3,var(--green));box-shadow:0 10px 30px -8px #baff91aa}
+
+/* Multiplayer */
+#mpHeadBtn{background:linear-gradient(135deg,#9b82ff,var(--purple));box-shadow:var(--glow);min-height:0;padding:10px 14px}
+.mp-p{border-radius:16px;background:linear-gradient(135deg,#352853,#2b2145)}
+.mp-top div{border-radius:16px;background:linear-gradient(135deg,#352853,#2b2145)}
+.mp-code{text-shadow:0 0 30px #baff9166}
+
+/* Giriş animasiyası */
+main>*{animation:screenEnter .5s ease both}
+.levels>*,.lesson-grid>*,.achievement-grid>*{animation:cardEnter .45s ease both}
+.levels>*:nth-child(2),.achievement-grid>*:nth-child(2){animation-delay:.05s}
+.levels>*:nth-child(3),.achievement-grid>*:nth-child(3){animation-delay:.1s}
+.levels>*:nth-child(4),.achievement-grid>*:nth-child(4){animation-delay:.15s}
+.levels>*:nth-child(5),.achievement-grid>*:nth-child(5){animation-delay:.2s}
+.levels>*:nth-child(6),.achievement-grid>*:nth-child(6){animation-delay:.25s}
+
+/* Mobil / iPhone */
+@media(max-width:700px){
+  header{padding-left:14px;padding-right:14px}
+  .logo{font-size:23px}
+  .header-right{gap:6px}
+  .profile{padding:9px 12px;font-size:13px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #mpHeadBtn{font-size:12px;padding:9px 11px}
+  .hero{padding:26px 22px;border-radius:24px}
+  .hero:after{font-size:60px;right:18px}
+  .stats{gap:10px}
+  .card{padding:15px}
+  .card h2{font-size:22px}
+  .word-box h2{font-size:32px}
+  .levels{gap:11px}
+  .level{padding:15px}
+}
+@media(max-width:430px){
+  .actions button{flex:1}
+  .screen{border-radius:22px}
+}
+@media(hover:none){
+  .level:hover,.lesson-card:hover{transform:none;box-shadow:none}
+}
