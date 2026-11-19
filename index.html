@@ -5,8 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#110d20">
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
 <title>EngAZ — Learn English</title>
 
 <style>
@@ -115,9 +113,7 @@ display:grid;grid-template-columns:repeat(3,1fr);
 gap:12px;margin-top:15px;
 }
 .achievement{text-align:center;opacity:.45}
-.achievement.unlocked{
-opacity:1;border-color:var(--green);
-}
+.achievement.unlocked{opacity:1;border-color:var(--green)}
 .achievement-icon{font-size:27px}
 .achievement h4{margin:10px 0 5px}
 .achievement p{font-size:12px;margin:0}
@@ -126,11 +122,15 @@ display:none;max-width:750px;margin:30px auto;
 background:var(--card);border:1px solid var(--line);
 padding:25px;border-radius:22px;
 }
-.screen.active{display:block}
+.screen.active{
+display:block;
+animation:screenEnter .35s ease;
+}
 .word-box{
 background:#302448;border:1px solid #57436f;
 padding:30px 15px;text-align:center;
 border-radius:18px;margin:20px 0;
+animation:cardEnter .4s ease;
 }
 .word-box h2{
 font-size:35px;margin:10px 0;color:var(--green);
@@ -141,9 +141,20 @@ font-size:35px;margin:10px 0;color:var(--green);
 display:block;width:100%;text-align:left;margin:10px 0;
 background:#302448;color:white;
 border:1px solid #57436f;border-radius:12px;
+transition:.2s;
 }
-.answer.correct{border-color:var(--green);background:#253b30}
-.answer.wrong{border-color:#ff8297;background:#402535}
+.answer:hover:not(:disabled){
+border-color:var(--green);
+transform:translateX(4px);
+}
+.answer.correct{
+border-color:var(--green);background:#253b30;
+animation:correctPulse .35s ease;
+}
+.answer.wrong{
+border-color:#ff8297;background:#402535;
+animation:wrongShake .35s ease;
+}
 .feedback{
 color:var(--green);font-weight:bold;
 min-height:25px;margin:15px 0;
@@ -181,6 +192,33 @@ font-weight:bold;opacity:0;pointer-events:none;
 transition:.3s;z-index:20;
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
+.confetti{
+position:fixed;top:-15px;width:9px;height:13px;
+z-index:30;pointer-events:none;
+animation:confettiFall 2.5s linear forwards;
+}
+@keyframes confettiFall{
+to{transform:translateY(105vh) rotate(720deg);opacity:0}
+}
+@keyframes cardEnter{
+from{opacity:0;transform:translateY(15px) scale(.97)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes screenEnter{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:translateY(0)}
+}
+@keyframes correctPulse{
+50%{transform:scale(1.025)}
+}
+@keyframes wrongShake{
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-3px)}
+}
+button:focus-visible{
+outline:2px solid var(--green);outline-offset:3px;
+}
 @media(max-width:700px){
 .stats{grid-template-columns:1fr 1fr}
 .levels,.achievement-grid{grid-template-columns:repeat(2,1fr)}
@@ -192,6 +230,12 @@ main{padding:20px 14px}
 @media(max-width:430px){
 .lesson-grid{grid-template-columns:1fr}
 .screen{margin:15px 10px;padding:18px}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{
+animation-duration:.01ms!important;
+transition-duration:.01ms!important;
+}
 }
 </style>
 </head>
@@ -219,26 +263,10 @@ main{padding:20px 14px}
 </section>
 
 <section class="stats">
-<div class="card">
-<div class="card-icon">⚡</div>
-<p>Ümumi XP</p>
-<h2 id="xp">0</h2>
-</div>
-<div class="card">
-<div class="card-icon">📚</div>
-<p>Tamamlanan dərslər</p>
-<h2 id="completed">0</h2>
-</div>
-<div class="card">
-<div class="card-icon">📖</div>
-<p>Öyrənilən sözlər</p>
-<h2 id="learned">0</h2>
-</div>
-<div class="card">
-<div class="card-icon">🔥</div>
-<p>Gündəlik seriya</p>
-<h2 id="streak">0 gün</h2>
-</div>
+<div class="card"><div class="card-icon">⚡</div><p>Ümumi XP</p><h2 id="xp">0</h2></div>
+<div class="card"><div class="card-icon">📚</div><p>Tamamlanan dərslər</p><h2 id="completed">0</h2></div>
+<div class="card"><div class="card-icon">📖</div><p>Öyrənilən sözlər</p><h2 id="learned">0</h2></div>
+<div class="card"><div class="card-icon">🔥</div><p>Gündəlik seriya</p><h2 id="streak">0 gün</h2></div>
 </section>
 
 <section class="xp-panel">
@@ -249,9 +277,7 @@ main{padding:20px 14px}
 </div>
 <strong id="xpProgressText">0 / 100 XP</strong>
 </div>
-<div class="progress">
-<span id="xpProgress" style="width:0%"></span>
-</div>
+<div class="progress"><span id="xpProgress" style="width:0%"></span></div>
 <p id="rankDescription">İlk XP-lərini qazan və inkişaf etməyə başla!</p>
 </section>
 
@@ -275,12 +301,9 @@ main{padding:20px 14px}
 <div class="tag" id="studyTag">A1 · Dərs 1</div>
 <h2 id="studyTitle">Salamlaşma</h2>
 <p id="studyDescription">Yeni sözləri öyrən.</p>
-
 <div class="bar"><span id="studyProgress"></span></div>
-
 <div id="studyContent"></div>
 <div class="feedback" id="feedback"></div>
-
 <div class="actions">
 <button id="continueButton" onclick="continueStudy()">Davam et →</button>
 </div>
@@ -299,6 +322,8 @@ main{padding:20px 14px}
 <div id="toast"></div>
 
 <script>
+// DƏRSLƏR
+
 const levelData=[
 {
 code:"A1",name:"Beginner",desc:"Başlanğıc səviyyə",icon:"🌱",
@@ -416,6 +441,8 @@ lessons:[
 }
 ];
 
+// YADDAŞ
+
 let saved={};
 
 try{
@@ -438,6 +465,75 @@ let quizScore=0;
 let answered=false;
 let mode="words";
 let lessonFinished=false;
+
+// SƏS SİSTEMİ
+
+let audioContext=null;
+
+function playSound(type){
+try{
+const AudioCtx=window.AudioContext||window.webkitAudioContext;
+if(!AudioCtx)return;
+
+if(!audioContext){
+audioContext=new AudioCtx();
+}
+
+const play=()=>{
+const sounds={
+correct:[523,659,784],
+wrong:[220,180],
+complete:[523,659,784,1046]
+};
+
+const notes=sounds[type]||sounds.correct;
+
+notes.forEach((frequency,index)=>{
+const oscillator=audioContext.createOscillator();
+const gain=audioContext.createGain();
+
+oscillator.connect(gain);
+gain.connect(audioContext.destination);
+
+oscillator.type="sine";
+oscillator.frequency.value=frequency;
+
+const start=audioContext.currentTime+index*.12;
+
+gain.gain.setValueAtTime(.001,start);
+gain.gain.exponentialRampToValueAtTime(.16,start+.03);
+gain.gain.exponentialRampToValueAtTime(.001,start+.28);
+
+oscillator.start(start);
+oscillator.stop(start+.3);
+});
+};
+
+if(audioContext.state==="suspended"){
+audioContext.resume().then(play).catch(console.error);
+}else{
+play();
+}
+}catch(error){
+console.log("Səs xətası:",error);
+}
+}
+
+// KONFETTİ
+
+function launchConfetti(){
+for(let i=0;i<55;i++){
+const particle=document.createElement("div");
+particle.className="confetti";
+particle.style.left=Math.random()*100+"%";
+particle.style.background=["#baff91","#8c70ff","#ffffff","#ffcf70"][i%4];
+particle.style.animationDelay=Math.random()*.8+"s";
+document.body.appendChild(particle);
+setTimeout(()=>particle.remove(),3500);
+}
+}
+
+// ÜMUMİ FUNKSİYALAR
 
 function persist(){
 try{
@@ -467,7 +563,6 @@ setTimeout(()=>toast.classList.remove("show"),2200);
 
 function updateStreak(){
 const current=today();
-
 if(saved.lastDay===current)return;
 
 if(saved.lastDay===previousDay()){
@@ -485,7 +580,6 @@ const level=Math.floor(saved.xp/100)+1;
 const progress=saved.xp%100;
 
 let name="🌱 Yeni başlayan";
-let description="İlk addımlarını atırsan.";
 
 if(level>=2)name="🌿 Söz ovçusu";
 if(level>=4)name="⭐ İngilis dili həvəskarı";
@@ -493,7 +587,7 @@ if(level>=7)name="🚀 Sürətli öyrənən";
 if(level>=10)name="🏆 Dil ustası";
 if(level>=15)name="👑 EngAZ əfsanəsi";
 
-return {level,progress,name,description};
+return {level,progress,name};
 }
 
 function updateStats(){
@@ -507,15 +601,14 @@ const rank=getRank();
 
 document.getElementById("rankName").textContent=rank.name;
 document.getElementById("rankLevel").textContent="Level "+rank.level;
-document.getElementById("xpProgressText").textContent=
-rank.progress+" / 100 XP";
-
-document.getElementById("xpProgress").style.width=
-rank.progress+"%";
+document.getElementById("xpProgressText").textContent=rank.progress+" / 100 XP";
+document.getElementById("xpProgress").style.width=rank.progress+"%";
 
 document.getElementById("rankDescription").textContent=
 "Ümumi "+saved.xp+" XP toplamısan. Növbəti səviyyəyə "+(100-rank.progress)+" XP qalıb.";
 }
+
+// SƏVİYYƏLƏR
 
 function renderLevels(){
 const area=document.getElementById("levels");
@@ -523,7 +616,6 @@ area.innerHTML="";
 
 levelData.forEach((level,index)=>{
 const total=level.lessons.length;
-
 const done=level.lessons.filter((lesson,i)=>
 saved.completed.includes(index+"-"+i)
 ).length;
@@ -538,9 +630,7 @@ div.innerHTML=`
 </div>
 <h3>${level.name}</h3>
 <p>${level.desc}</p>
-<div class="progress">
-<span style="width:${done/total*100}%"></span>
-</div>
+<div class="progress"><span style="width:${done/total*100}%"></span></div>
 <div class="level-info">${done}/${total} dərs tamamlanıb</div>
 `;
 
@@ -586,6 +676,8 @@ area.appendChild(div);
 });
 }
 
+// DƏRS
+
 function startLesson(index){
 currentLesson=index;
 currentStep=0;
@@ -598,8 +690,8 @@ updateStreak();
 
 document.getElementById("home").style.display="none";
 document.getElementById("study").classList.add("active");
-
 document.getElementById("continueButton").onclick=continueStudy;
+
 showStep();
 window.scrollTo(0,0);
 }
@@ -644,7 +736,6 @@ document.getElementById("studyDescription").textContent=
 answered=false;
 
 const word=lesson.words[quizIndex];
-
 const distractors=lesson.words.filter((w,i)=>i!==quizIndex);
 
 const options=[
@@ -692,9 +783,10 @@ speechSynthesis.cancel();
 const utterance=new SpeechSynthesisUtterance(word);
 utterance.lang="en-US";
 utterance.rate=.85;
-
 speechSynthesis.speak(utterance);
 }
+
+// TEST CAVABLARI
 
 function checkAnswer(button,answer,correct){
 if(answered)return;
@@ -705,6 +797,7 @@ const buttons=document.querySelectorAll(".answer");
 buttons.forEach(b=>b.disabled=true);
 
 if(answer===correct){
+playSound("correct");
 quizScore++;
 button.classList.add("correct");
 
@@ -723,6 +816,7 @@ document.getElementById("feedback").textContent=
 "Əla! Düzgün cavabdır. +5 XP 🎉";
 
 }else{
+playSound("wrong");
 button.classList.add("wrong");
 
 buttons.forEach(b=>{
@@ -753,8 +847,7 @@ return;
 }
 
 if(!answered){
-document.getElementById("feedback").textContent=
-"Əvvəlcə cavab seç.";
+document.getElementById("feedback").textContent="Əvvəlcə cavab seç.";
 return;
 }
 
@@ -765,6 +858,8 @@ showStep();
 finishLesson();
 }
 }
+
+// DƏRSİN TAMAMLANMASI
 
 function finishLesson(){
 lessonFinished=true;
@@ -785,11 +880,11 @@ saved.words.push(w[0]);
 });
 
 persist();
+launchConfetti();
+playSound("complete");
 }
 
-document.getElementById("studyTitle").textContent=
-"Dərs tamamlandı! 🎉";
-
+document.getElementById("studyTitle").textContent="Dərs tamamlandı! 🎉";
 document.getElementById("studyDescription").textContent=
 "Nəticən: "+quizScore+"/5 düzgün cavab.";
 
@@ -804,12 +899,8 @@ ${firstCompletion?"+15 XP dərs mükafatı":"Bu dərsi artıq tamamlamısan."}
 `;
 
 document.getElementById("studyProgress").style.width="100%";
-document.getElementById("feedback").textContent=
-"İnkişaf etməyə davam et! 💚";
-
-document.getElementById("continueButton").textContent=
-"Dərslərə qayıt";
-
+document.getElementById("feedback").textContent="İnkişaf etməyə davam et! 💚";
+document.getElementById("continueButton").textContent="Dərslərə qayıt";
 document.getElementById("continueButton").onclick=goHome;
 
 updateStats();
@@ -820,40 +911,18 @@ renderAchievements();
 if(firstCompletion)showToast("Dərs tamamlandı! +15 XP 🏆");
 }
 
+// NAİLİYYƏTLƏR
+
 function renderAchievements(){
 const area=document.getElementById("achievements");
 
 const achievements=[
-{
-icon:"🌱",name:"İlk addım",
-desc:"İlk dərsini tamamla",
-done:saved.completed.length>=1
-},
-{
-icon:"📚",name:"Kitab qurdu",
-desc:"5 dərs tamamla",
-done:saved.completed.length>=5
-},
-{
-icon:"⚡",name:"XP ovçusu",
-desc:"100 XP qazan",
-done:saved.xp>=100
-},
-{
-icon:"🔥",name:"3 günlük seriya",
-desc:"3 gün ardıcıl öyrən",
-done:saved.streak>=3
-},
-{
-icon:"📖",name:"Söz ustası",
-desc:"25 söz öyrən",
-done:saved.words.length>=25
-},
-{
-icon:"👑",name:"Level 5",
-desc:"5-ci səviyyəyə çat",
-done:Math.floor(saved.xp/100)+1>=5
-}
+{icon:"🌱",name:"İlk addım",desc:"İlk dərsini tamamla",done:saved.completed.length>=1},
+{icon:"📚",name:"Kitab qurdu",desc:"5 dərs tamamla",done:saved.completed.length>=5},
+{icon:"⚡",name:"XP ovçusu",desc:"100 XP qazan",done:saved.xp>=100},
+{icon:"🔥",name:"3 günlük seriya",desc:"3 gün ardıcıl öyrən",done:saved.streak>=3},
+{icon:"📖",name:"Söz ustası",desc:"25 söz öyrən",done:saved.words.length>=25},
+{icon:"👑",name:"Level 5",desc:"5-ci səviyyəyə çat",done:Math.floor(saved.xp/100)+1>=5}
 ];
 
 area.innerHTML="";
@@ -872,12 +941,13 @@ area.appendChild(div);
 });
 }
 
+// NAVİQASİYA
+
 function goHome(){
 if("speechSynthesis" in window)speechSynthesis.cancel();
 
 document.getElementById("study").classList.remove("active");
 document.getElementById("home").style.display="block";
-
 document.getElementById("continueButton").onclick=continueStudy;
 
 renderLevels();
@@ -887,6 +957,8 @@ updateStats();
 
 window.scrollTo({top:0,behavior:"smooth"});
 }
+
+// PROFİL
 
 function openProfile(){
 document.getElementById("nameInput").value=saved.name;
@@ -916,13 +988,15 @@ document.getElementById("nameInput").addEventListener("keydown",e=>{
 if(e.key==="Enter")saveProfile();
 });
 
+// BAŞLANĞIC
+
 renderLevels();
 renderLessons();
 renderAchievements();
 updateStats();
 
 if(!saved.name)openProfile();
-</script>
 
+</script>
 </body>
 </html>
