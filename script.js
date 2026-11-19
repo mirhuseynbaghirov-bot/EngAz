@@ -145,7 +145,63 @@ let lessonFinished=false;
 
 let audioContext;
 
+
+let audioContext = null;
+
 function playSound(type){
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioCtx) {
+      console.log("AudioContext dəstəklənmir");
+      return;
+    }
+
+    if (!audioContext) {
+      audioContext = new AudioCtx();
+    }
+
+    const play = () => {
+      const frequencies = {
+        correct: [523, 659, 784],
+        wrong: [220, 180],
+        complete: [523, 659, 784, 1046]
+      };
+
+      const notes = frequencies[type] || frequencies.correct;
+
+      notes.forEach((frequency, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frequency;
+
+        const start = audioContext.currentTime + index * 0.12;
+
+        gain.gain.setValueAtTime(0.001, start);
+        gain.gain.exponentialRampToValueAtTime(0.18, start + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
+
+        oscillator.start(start);
+        oscillator.stop(start + 0.3);
+      });
+    };
+
+    if (audioContext.state === "suspended") {
+      audioContext.resume().then(play);
+    } else {
+      play();
+    }
+
+  } catch (error) {
+    console.error("Səs xətası:", error);
+  }
+}
+
 try{
 const AudioCtx=window.AudioContext||window.webkitAudioContext;
 if(!AudioCtx)return;
