@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EngAZ — Learn English</title>
+<style>
+:root {
+  --bg:#110d20;
+  --card:#211936;
+  --purple:#8c70ff;
+  --green:#baff91;
+  --white:#ffffff;
+  --muted:#aaa3bd;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--white);
+  font-family:Arial,sans-serif;
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:22px 7%;
+  border-bottom:1px solid #302546;
+}
+.logo{font-size:27px;font-weight:900}
+.logo span{color:var(--green)}
+.profile{
+  background:var(--card);
+  padding:10px 17px;
+  border-radius:30px;
+}
+main{max-width:1100px;margin:auto;padding:35px 20px}
+.hero{
+  background:linear-gradient(120deg,#30204e,#211936);
+  padding:35px;
+  border-radius:25px;
+  border:1px solid #44345e;
+}
+.hero small{color:var(--green);font-weight:bold}
+h1{font-size:40px;margin:15px 0}
+p{color:var(--muted);line-height:1.6}
+button{
+  background:var(--green);
+  color:#171126;
+  border:0;
+  padding:14px 22px;
+  border-radius:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:22px;
+}
+.card{
+  background:var(--card);
+  padding:20px;
+  border-radius:17px;
+  border:1px solid #382b50;
+}
+.card h2{color:var(--green)}
+.levels{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:20px;
+}
+.level{
+  background:var(--card);
+  padding:22px;
+  border-radius:18px;
+  border:1px solid #382b50;
+}
+.level:hover{border-color:var(--green)}
+.level h3{color:var(--green)}
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr}
+  .levels{grid-template-columns:1fr}
+  h1{font-size:31px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Eng<span>AZ</span></div>
+  <div class="profile">👤 Mənim profilim</div>
+</header>
+<main>
+  <section class="hero">
+    <small>WELCOME TO ENGAZ</small>
+    <h1>İngilis dilini<br>öz yolunla öyrən.</h1>
+    <p>Öyrən, inkişaf et və hər gün bir addım irəli get.</p>
+    <button onclick="alert('EngAZ dərsləri tezliklə!')">
+      Öyrənməyə başla →
+    </button>
+  </section>
+
+  <section class="stats">
+    <div class="card">
+      <p>Ümumi XP</p>
+      <h2>0 ⚡</h2>
+    </div>
+    <div class="card">
+      <p>Tamamlanan dərslər</p>
+      <h2>0 📚</h2>
+    </div>
+    <div class="card">
+      <p>Gündəlik seriya</p>
+      <h2>0 🔥</h2>
+    </div>
+  </section>
+
+  <h2 style="margin-top:40px">Öyrənmə xəritəsi</h2>
+  <p>Səviyyəni seç və inkişaf etməyə başla.</p>
+
+  <section class="levels">
+    <div class="level"><h3>A1</h3><h2>Beginner</h2><p>Başlanğıc səviyyə</p></div>
+    <div class="level"><h3>A2</h3><h2>Elementary</h2><p>İlkin biliklər</p></div>
+    <div class="level"><h3>B1</h3><h2>Intermediate</h2><p>Orta səviyyə</p></div>
+    <div class="level"><h3>B2</h3><h2>Upper Intermediate</h2><p>Yuxarı orta</p></div>
+    <div class="level"><h3>C1</h3><h2>Advanced</h2><p>İrəli səviyyə</p></div>
+    <div class="level"><h3>C2</h3><h2>Proficiency</h2><p>Ustalıq</p></div>
+  </section>
+</main>
+</body>
+</html>
