@@ -1,4 +1,4 @@
-
+alert("EngAZ JavaScript işləyir!");
 const levelData=[
 {
 code:"A1",name:"Beginner",desc:"Başlanğıc səviyyə",icon:"🌱",
