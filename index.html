@@ -10,41 +10,34 @@
 
 <style>
 :root{
---bg:#110d20;
---card:#211936;
---purple:#8c70ff;
---green:#baff91;
---white:#fff;
---muted:#aaa3bd;
+--bg:#110d20;--card:#211936;--purple:#8c70ff;
+--green:#baff91;--white:#fff;--muted:#aaa3bd;
 --line:#382b50;
 }
 *{box-sizing:border-box}
-body{
-margin:0;background:var(--bg);color:var(--white);
-font-family:Arial,sans-serif;
-}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
 header{
 display:flex;justify-content:space-between;align-items:center;
 padding:18px 7%;border-bottom:1px solid var(--line);
 position:sticky;top:0;background:#110d20ed;
-backdrop-filter:blur(12px);z-index:5;
+backdrop-filter:blur(12px);z-index:5
 }
 .logo{font-size:27px;font-weight:900}
 .logo span{color:var(--green)}
 .header-right{display:flex;gap:10px;align-items:center}
 .profile{
 background:var(--card);padding:11px 15px;
-border-radius:30px;cursor:pointer;border:1px solid var(--line);
+border-radius:30px;cursor:pointer;border:1px solid var(--line)
 }
 main{max-width:1100px;margin:auto;padding:30px 20px}
 .hero{
 background:linear-gradient(120deg,#30204e,#211936);
 padding:35px;border-radius:25px;border:1px solid #44345e;
-position:relative;overflow:hidden;
+position:relative;overflow:hidden
 }
 .hero:after{
 content:"✦";position:absolute;right:35px;top:25px;
-font-size:90px;color:#baff9115;
+font-size:90px;color:#baff9115
 }
 .hero small,.tag{color:var(--green);font-weight:bold}
 h1{font-size:40px;margin:15px 0}
@@ -52,67 +45,45 @@ p{color:var(--muted);line-height:1.6}
 button{
 background:var(--green);color:#171126;border:0;
 padding:13px 19px;border-radius:12px;
-font-weight:bold;cursor:pointer;transition:.2s;
+font-weight:bold;cursor:pointer;transition:.2s
 }
 button:active{transform:scale(.97)}
 button:disabled{opacity:.5;cursor:not-allowed}
-.secondary{
-background:#302448;color:white;border:1px solid #57436f;
-}
-.stats{
-display:grid;grid-template-columns:repeat(4,1fr);
-gap:13px;margin-top:22px;
-}
+.secondary{background:#302448;color:white;border:1px solid #57436f}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:22px}
 .card,.level,.achievement{
 background:var(--card);padding:19px;
-border-radius:17px;border:1px solid var(--line);
+border-radius:17px;border:1px solid var(--line)
 }
 .card h2{color:var(--green);margin-bottom:5px}
 .card p{margin:0;font-size:13px}
 .card-icon{font-size:22px}
 .xp-panel{
-margin-top:18px;background:var(--card);
-padding:20px;border-radius:17px;border:1px solid var(--line);
+margin-top:18px;background:var(--card);padding:20px;
+border-radius:17px;border:1px solid var(--line)
 }
 .xp-heading{display:flex;justify-content:space-between;gap:10px}
-.progress{
-height:9px;background:#403650;border-radius:20px;
-overflow:hidden;margin-top:13px;
-}
-.progress span{
-display:block;height:100%;background:var(--green);
-transition:width .5s;
-}
+.progress{height:9px;background:#403650;border-radius:20px;overflow:hidden;margin-top:13px}
+.progress span{display:block;height:100%;background:var(--green);transition:width .5s}
 .section-title{margin-top:38px}
-.levels{
-display:grid;grid-template-columns:repeat(3,1fr);
-gap:15px;margin-top:18px;
-}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:18px}
 .level{cursor:pointer;transition:.2s}
-.level:hover,.level.selected{
-border-color:var(--green);transform:translateY(-3px);
-}
+.level:hover,.level.selected{border-color:var(--green);transform:translateY(-3px)}
 .level h3{color:var(--green)}
 .level p{font-size:13px}
 .level-top{display:flex;justify-content:space-between}
 .level-icon{font-size:26px}
 .level-info{font-size:12px;color:var(--muted);margin-top:8px}
-.lesson-grid{
-display:grid;grid-template-columns:repeat(2,1fr);
-gap:14px;margin-top:18px;
-}
+.lesson-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
 .lesson-card{
 background:var(--card);border:1px solid var(--line);
-padding:20px;border-radius:17px;
+padding:20px;border-radius:17px
 }
 .lesson-card h3{margin-top:8px}
 .lesson-card p{font-size:13px}
 .done{color:var(--green)!important}
 .lesson-card button{margin-top:8px}
-.achievement-grid{
-display:grid;grid-template-columns:repeat(3,1fr);
-gap:12px;margin-top:15px;
-}
+.achievement-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
 .achievement{text-align:center;opacity:.45}
 .achievement.unlocked{opacity:1;border-color:var(--green)}
 .achievement-icon{font-size:27px}
@@ -121,86 +92,59 @@ gap:12px;margin-top:15px;
 .screen{
 display:none;max-width:750px;margin:30px auto;
 background:var(--card);border:1px solid var(--line);
-padding:25px;border-radius:22px;
+padding:25px;border-radius:22px
 }
-.screen.active{
-display:block;
-animation:screenEnter .35s ease;
-}
+.screen.active{display:block;animation:screenEnter .35s ease}
 .word-box{
 background:#302448;border:1px solid #57436f;
-padding:30px 15px;text-align:center;
-border-radius:18px;margin:20px 0;
-animation:cardEnter .4s ease;
+padding:30px 15px;text-align:center;border-radius:18px;
+margin:20px 0;animation:cardEnter .4s ease
 }
-.word-box h2{
-font-size:35px;margin:10px 0;color:var(--green);
-}
+.word-box h2{font-size:35px;margin:10px 0;color:var(--green)}
 .translation{font-size:19px}
 .example{font-size:14px;color:var(--muted);margin-top:15px}
 .answer{
 display:block;width:100%;text-align:left;margin:10px 0;
-background:#302448;color:white;
-border:1px solid #57436f;border-radius:12px;
-transition:.2s;
+background:#302448;color:white;border:1px solid #57436f;
+border-radius:12px;transition:.2s
 }
-.answer:hover:not(:disabled){
-border-color:var(--green);
-transform:translateX(4px);
-}
-.answer.correct{
-border-color:var(--green);background:#253b30;
-animation:correctPulse .35s ease;
-}
-.answer.wrong{
-border-color:#ff8297;background:#402535;
-animation:wrongShake .35s ease;
-}
-.feedback{
-color:var(--green);font-weight:bold;
-min-height:25px;margin:15px 0;
-}
-.bar{
-height:8px;background:#403650;border-radius:20px;
-margin:20px 0;overflow:hidden;
-}
-.bar span{
-display:block;height:100%;background:var(--green);
-border-radius:20px;transition:width .3s;
-}
+.answer:hover:not(:disabled){border-color:var(--green);transform:translateX(4px)}
+.answer.correct{border-color:var(--green);background:#253b30;animation:correctPulse .35s ease}
+.answer.wrong{border-color:#ff8297;background:#402535;animation:wrongShake .35s ease}
+.feedback{color:var(--green);font-weight:bold;min-height:25px;margin:15px 0}
+.bar{height:8px;background:#403650;border-radius:20px;margin:20px 0;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--green);border-radius:20px;transition:width .3s}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
 .modal{
 display:none;position:fixed;inset:0;background:#000b;
-z-index:10;place-items:center;padding:20px;
+z-index:10;place-items:center;padding:20px
 }
 .modal.active{display:grid}
 .modal-box{
 background:var(--card);border:1px solid var(--line);
 padding:25px;border-radius:20px;width:100%;max-width:400px;
+max-height:90vh;overflow-y:auto
 }
 input{
 width:100%;padding:13px;background:#110d20;
 border:1px solid var(--line);border-radius:10px;
-color:white;margin:12px 0;
+color:white;margin:12px 0
 }
+.auth-status{font-size:13px;color:var(--green);margin:10px 0}
 .notice{text-align:center;color:var(--muted);font-size:12px;margin:30px 0}
 #toast{
 position:fixed;bottom:25px;left:50%;
 transform:translate(-50%,20px);
 background:var(--green);color:#171126;
-padding:13px 22px;border-radius:12px;
-font-weight:bold;opacity:0;pointer-events:none;
-transition:.3s;z-index:20;
+padding:13px 22px;border-radius:12px;font-weight:bold;
+opacity:0;pointer-events:none;transition:.3s;z-index:20
 }
 #toast.show{opacity:1;transform:translate(-50%,0)}
 .confetti{
 position:fixed;top:-15px;width:9px;height:13px;
-z-index:30;pointer-events:none;
-animation:confettiFall 2.5s linear forwards;
+z-index:30;pointer-events:none;animation:confettiFall 2.5s linear forwards
 }
-@keyframes confettiFall{
-to{transform:translateY(105vh) rotate(720deg);opacity:0}
-}
+@keyframes confettiFall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
 @keyframes cardEnter{
 from{opacity:0;transform:translateY(15px) scale(.97)}
 to{opacity:1;transform:translateY(0) scale(1)}
@@ -209,17 +153,13 @@ to{opacity:1;transform:translateY(0) scale(1)}
 from{opacity:0;transform:translateY(12px)}
 to{opacity:1;transform:translateY(0)}
 }
-@keyframes correctPulse{
-50%{transform:scale(1.025)}
-}
+@keyframes correctPulse{50%{transform:scale(1.025)}}
 @keyframes wrongShake{
 25%{transform:translateX(-5px)}
 50%{transform:translateX(5px)}
 75%{transform:translateX(-3px)}
 }
-button:focus-visible{
-outline:2px solid var(--green);outline-offset:3px;
-}
+button:focus-visible{outline:2px solid var(--green);outline-offset:3px}
 @media(max-width:700px){
 .stats{grid-template-columns:1fr 1fr}
 .levels,.achievement-grid{grid-template-columns:repeat(2,1fr)}
@@ -233,10 +173,7 @@ main{padding:20px 14px}
 .screen{margin:15px 10px;padding:18px}
 }
 @media(prefers-reduced-motion:reduce){
-*,*::before,*::after{
-animation-duration:.01ms!important;
-transition-duration:.01ms!important;
-}
+*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
@@ -247,7 +184,7 @@ transition-duration:.01ms!important;
 <div class="logo">Eng<span>AZ</span></div>
 <div class="header-right">
 <div class="profile" onclick="openProfile()">
-👤 <span id="userName">Profil</span>
+👤 <span id="userName">Giriş / Profil</span>
 </div>
 </div>
 </header>
@@ -312,18 +249,56 @@ transition-duration:.01ms!important;
 
 <div class="modal" id="profileModal">
 <div class="modal-box">
-<h2>👋 Xoş gəlmisən!</h2>
-<p>EngAZ profilini yarat.</p>
-<input id="nameInput" placeholder="Adını daxil et" maxlength="25">
-<button onclick="saveProfile()">Yadda saxla</button>
-<button class="secondary" onclick="closeProfile()">Bağla</button>
+<h2>💜 EngAZ hesabı</h2>
+<p id="authMessage">Hesabına daxil ol və öyrənməyə davam et.</p>
+<div class="auth-status" id="authStatus">Hesaba daxil olmamısan</div>
+
+<input id="authEmail" type="email" placeholder="Email ünvanın">
+<input id="authPassword" type="password" placeholder="Şifrə (minimum 6 simvol)">
+
+<button onclick="signUp()" style="width:100%">Qeydiyyatdan keç</button>
+<button class="secondary" onclick="signIn()" style="width:100%;margin-top:10px">Hesaba daxil ol</button>
+
+<hr style="border-color:#382b50;margin:20px 0">
+
+<p>İstifadəçi adın</p>
+<input id="nameInput" placeholder="İstifadəçi adını yaz" maxlength="25">
+<button onclick="saveProfile()" style="width:100%">Profili yadda saxla</button>
+
+<button class="secondary" onclick="signOut()" style="width:100%;margin-top:10px">Hesabdan çıxış</button>
+<button class="secondary" onclick="closeProfile()" style="width:100%;margin-top:10px">Bağla</button>
 </div>
 </div>
 
 <div id="toast"></div>
 
 <script>
-// DƏRSLƏR
+
+// =====================================
+// 1. SUPABASE QURAŞDIRILMASI
+// =====================================
+
+// Öz Supabase layihənin məlumatlarını daxil et.
+
+const SUPABASE_URL = "https://xooveijwwusrqshdljft.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_KuGIVsccYZhZmS5nhRcouw_YZJLI6zB";
+
+let supabaseClient = null;
+let currentUser = null;
+
+if(
+SUPABASE_URL.startsWith("https://") &&
+SUPABASE_ANON_KEY !== "BURAYA_SUPABASE_ANON_KEY"
+){
+supabaseClient = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
+);
+}
+
+// =====================================
+// 2. DƏRSLƏR
+// =====================================
 
 const levelData=[
 {
@@ -442,7 +417,9 @@ lessons:[
 }
 ];
 
-// YADDAŞ
+// =====================================
+// 3. YADDAŞ SİSTEMİ
+// =====================================
 
 let saved={};
 
@@ -467,7 +444,17 @@ let answered=false;
 let mode="words";
 let lessonFinished=false;
 
-// SƏS SİSTEMİ
+function persist(){
+try{
+localStorage.setItem("engazData",JSON.stringify(saved));
+}catch(e){
+console.log("Yadda saxlama xətası",e);
+}
+}
+
+// =====================================
+// 4. SƏS SİSTEMİ
+// =====================================
 
 let audioContext=null;
 
@@ -476,11 +463,8 @@ try{
 const AudioCtx=window.AudioContext||window.webkitAudioContext;
 if(!AudioCtx)return;
 
-if(!audioContext){
-audioContext=new AudioCtx();
-}
+if(!audioContext)audioContext=new AudioCtx();
 
-const play=()=>{
 const sounds={
 correct:[523,659,784],
 wrong:[220,180],
@@ -489,6 +473,7 @@ complete:[523,659,784,1046]
 
 const notes=sounds[type]||sounds.correct;
 
+const play=()=>{
 notes.forEach((frequency,index)=>{
 const oscillator=audioContext.createOscillator();
 const gain=audioContext.createGain();
@@ -512,15 +497,16 @@ oscillator.stop(start+.3);
 
 if(audioContext.state==="suspended"){
 audioContext.resume().then(play).catch(console.error);
-}else{
-play();
-}
+}else play();
+
 }catch(error){
 console.log("Səs xətası:",error);
 }
 }
 
-// KONFETTİ
+// =====================================
+// 5. KONFETTİ
+// =====================================
 
 function launchConfetti(){
 for(let i=0;i<55;i++){
@@ -534,15 +520,9 @@ setTimeout(()=>particle.remove(),3500);
 }
 }
 
-// ÜMUMİ FUNKSİYALAR
-
-function persist(){
-try{
-localStorage.setItem("engazData",JSON.stringify(saved));
-}catch(e){
-console.log("Yadda saxlama xətası",e);
-}
-}
+// =====================================
+// 6. ÜMUMİ FUNKSİYALAR
+// =====================================
 
 function today(){
 const d=new Date();
@@ -581,7 +561,6 @@ const level=Math.floor(saved.xp/100)+1;
 const progress=saved.xp%100;
 
 let name="🌱 Yeni başlayan";
-
 if(level>=2)name="🌿 Söz ovçusu";
 if(level>=4)name="⭐ İngilis dili həvəskarı";
 if(level>=7)name="🚀 Sürətli öyrənən";
@@ -596,7 +575,7 @@ document.getElementById("xp").textContent=saved.xp+" ⚡";
 document.getElementById("completed").textContent=saved.completed.length;
 document.getElementById("learned").textContent=saved.words.length;
 document.getElementById("streak").textContent=saved.streak+" gün";
-document.getElementById("userName").textContent=saved.name||"Profil";
+document.getElementById("userName").textContent=saved.name||"Giriş / Profil";
 
 const rank=getRank();
 
@@ -609,7 +588,9 @@ document.getElementById("rankDescription").textContent=
 "Ümumi "+saved.xp+" XP toplamısan. Növbəti səviyyəyə "+(100-rank.progress)+" XP qalıb.";
 }
 
-// SƏVİYYƏLƏR
+// =====================================
+// 7. SƏVİYYƏLƏR
+// =====================================
 
 function renderLevels(){
 const area=document.getElementById("levels");
@@ -677,7 +658,9 @@ area.appendChild(div);
 });
 }
 
-// DƏRS
+// =====================================
+// 8. DƏRS SİSTEMİ
+// =====================================
 
 function startLesson(index){
 currentLesson=index;
@@ -787,7 +770,9 @@ utterance.rate=.85;
 speechSynthesis.speak(utterance);
 }
 
-// TEST CAVABLARI
+// =====================================
+// 9. TEST CAVABLARI
+// =====================================
 
 function checkAnswer(button,answer,correct){
 if(answered)return;
@@ -800,6 +785,7 @@ buttons.forEach(b=>b.disabled=true);
 if(answer===correct){
 playSound("correct");
 quizScore++;
+
 button.classList.add("correct");
 
 const key=selectedLevel+"-"+currentLesson;
@@ -860,7 +846,9 @@ finishLesson();
 }
 }
 
-// DƏRSİN TAMAMLANMASI
+// =====================================
+// 10. DƏRSİN TAMAMLANMASI
+// =====================================
 
 function finishLesson(){
 lessonFinished=true;
@@ -912,7 +900,9 @@ renderAchievements();
 if(firstCompletion)showToast("Dərs tamamlandı! +15 XP 🏆");
 }
 
-// NAİLİYYƏTLƏR
+// =====================================
+// 11. NAİLİYYƏTLƏR
+// =====================================
 
 function renderAchievements(){
 const area=document.getElementById("achievements");
@@ -942,7 +932,9 @@ area.appendChild(div);
 });
 }
 
-// NAVİQASİYA
+// =====================================
+// 12. NAVİQASİYA
+// =====================================
 
 function goHome(){
 if("speechSynthesis" in window)speechSynthesis.cancel();
@@ -959,7 +951,9 @@ updateStats();
 window.scrollTo({top:0,behavior:"smooth"});
 }
 
-// PROFİL
+// =====================================
+// 13. PROFİL VƏ SUPABASE AUTH
+// =====================================
 
 function openProfile(){
 document.getElementById("nameInput").value=saved.name;
@@ -970,7 +964,121 @@ function closeProfile(){
 document.getElementById("profileModal").classList.remove("active");
 }
 
-function saveProfile(){
+function setAuthStatus(message){
+document.getElementById("authStatus").textContent=message;
+}
+
+async function signUp(){
+if(!supabaseClient){
+showToast("Əvvəlcə Supabase məlumatlarını əlavə et.");
+return;
+}
+
+const email=document.getElementById("authEmail").value.trim();
+const password=document.getElementById("authPassword").value;
+
+if(!email||!password){
+showToast("Email və şifrəni daxil et.");
+return;
+}
+
+if(password.length<6){
+showToast("Şifrə minimum 6 simvol olmalıdır.");
+return;
+}
+
+setAuthStatus("Qeydiyyat yaradılır...");
+
+try{
+const {data,error}=await supabaseClient.auth.signUp({
+email,
+password,
+options:{
+data:{username:saved.name||""}
+}
+});
+
+if(error)throw error;
+
+if(data.session){
+currentUser=data.user;
+await loadCloudProfile();
+setAuthStatus("Qeydiyyat uğurludur!");
+showToast("Hesab yaradıldı! 💜");
+}else{
+setAuthStatus("Email təsdiqi tələb oluna bilər. Emailini yoxla.");
+showToast("Təsdiq məktubu göndərildi.");
+}
+
+}catch(error){
+setAuthStatus(error.message);
+showToast("Qeydiyyat xətası.");
+console.error(error);
+}
+}
+
+async function signIn(){
+if(!supabaseClient){
+showToast("Əvvəlcə Supabase məlumatlarını əlavə et.");
+return;
+}
+
+const email=document.getElementById("authEmail").value.trim();
+const password=document.getElementById("authPassword").value;
+
+if(!email||!password){
+showToast("Email və şifrəni daxil et.");
+return;
+}
+
+setAuthStatus("Hesaba daxil olunur...");
+
+try{
+const {data,error}=await supabaseClient.auth.signInWithPassword({
+email,password
+});
+
+if(error)throw error;
+
+currentUser=data.user;
+await loadCloudProfile();
+
+setAuthStatus("Hesaba uğurla daxil oldun.");
+showToast("Xoş gəlmisən! 💜");
+updateStats();
+
+}catch(error){
+setAuthStatus(error.message);
+showToast("Giriş alınmadı.");
+console.error(error);
+}
+}
+
+async function loadCloudProfile(){
+if(!supabaseClient||!currentUser)return;
+
+try{
+const {data,error}=await supabaseClient
+.from("profiles")
+.select("username")
+.eq("id",currentUser.id)
+.maybeSingle();
+
+if(error)throw error;
+
+if(data&&data.username){
+saved.name=data.username;
+persist();
+updateStats();
+document.getElementById("nameInput").value=data.username;
+}
+}catch(error){
+console.error("Profil yüklənmədi:",error);
+setAuthStatus("Hesab aktivdir, profil məlumatı yüklənmədi.");
+}
+}
+
+async function saveProfile(){
 const name=document.getElementById("nameInput").value.trim();
 
 if(!name){
@@ -981,20 +1089,106 @@ return;
 saved.name=name;
 persist();
 updateStats();
+
+if(supabaseClient&&currentUser){
+try{
+const {error}=await supabaseClient
+.from("profiles")
+.upsert({
+id:currentUser.id,
+username:name,
+updated_at:new Date().toISOString()
+});
+
+if(error)throw error;
+
+setAuthStatus("Profil Supabase-də yadda saxlanıldı.");
+}catch(error){
+console.error("Profil yadda saxlanmadı:",error);
+setAuthStatus("Profil cihazında saxlanıldı, bulud xətası: "+error.message);
+showToast("Bulud yaddaşında xəta.");
+return;
+}
+}
+
 closeProfile();
 showToast("Profil yadda saxlanıldı! 💜");
+}
+
+async function signOut(){
+if(!supabaseClient){
+showToast("Supabase qoşulmayıb.");
+return;
+}
+
+try{
+const {error}=await supabaseClient.auth.signOut();
+if(error)throw error;
+
+currentUser=null;
+setAuthStatus("Hesabdan çıxış edildi.");
+showToast("Hesabdan çıxış edildi.");
+
+}catch(error){
+console.error(error);
+showToast("Çıxış zamanı xəta baş verdi.");
+}
+}
+
+// =====================================
+// 14. AUTH İLK YÜKLƏNMƏ
+// =====================================
+
+async function initializeAuth(){
+if(!supabaseClient){
+setAuthStatus("Supabase bağlantısı qurulmayıb.");
+return;
+}
+
+try{
+const {data,error}=await supabaseClient.auth.getSession();
+
+if(error)throw error;
+
+currentUser=data.session?.user||null;
+
+if(currentUser){
+setAuthStatus("Hesaba daxil olmusan: "+currentUser.email);
+await loadCloudProfile();
+}else{
+setAuthStatus("Hesaba daxil olmamısan.");
+}
+
+supabaseClient.auth.onAuthStateChange((event,session)=>{
+currentUser=session?.user||null;
+
+if(currentUser){
+setAuthStatus("Hesaba daxil olmusan: "+currentUser.email);
+}else{
+setAuthStatus("Hesaba daxil olmamısan.");
+}
+});
+
+}catch(error){
+console.error("Auth xətası:",error);
+setAuthStatus("Supabase bağlantı xətası.");
+}
 }
 
 document.getElementById("nameInput").addEventListener("keydown",e=>{
 if(e.key==="Enter")saveProfile();
 });
 
-// BAŞLANĞIC
+// =====================================
+// 15. BAŞLANĞIC
+// =====================================
 
 renderLevels();
 renderLessons();
 renderAchievements();
 updateStats();
+
+initializeAuth();
 
 if(!saved.name)openProfile();
 
