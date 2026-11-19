@@ -8,7 +8,7 @@ STARTED:"Oyun artıq başlayıb.",NOT_OWNER:"Yalnız otaq sahibi başlada bilər
 NEED_PLAYERS:"Ən azı 2 oyunçu lazımdır.",NOT_READY:"Bütün oyunçular hazır olmalıdır."};
 function errMsg(e){const m=(e&&e.message)||"";for(const k in ERR)if(m.includes(k))return ERR[k];return "Xəta: "+m;}
 
-let room=null,players=[],answers=[],chan=null,tick=null,advancing=-1,myAns={},starting=false;
+let room=null,players=[],answers=[],chan=null,tick=null,advancing=-1,myAns={},starting=false,lastSig="",poll=null;
 
 // ---------- CSS + HTML ----------
 const st=document.createElement("style");
@@ -78,18 +78,19 @@ async function act(fn){
 
 // ---------- Otağa giriş + realtime ----------
 function enter(r){
-  room=r;myAns={};advancing=-1;starting=false;
+  room=r;myAns={};advancing=-1;starting=false;lastSig="";
   if(chan)sb().removeChannel(chan);
   const f=(t,k)=>({event:"*",schema:"public",table:t,filter:k+"=eq."+r.id});
   chan=sb().channel("room-"+r.id)
-    .on("postgres_changes",f("rooms","id"),refresh)
-    .on("postgres_changes",f("room_players","room_id"),refresh)
-    .on("postgres_changes",f("room_answers","room_id"),refresh)
+    .on("postgres_changes",f("rooms","id"),()=>refresh())
+    .on("postgres_changes",f("room_players","room_id"),()=>refresh())
+    .on("postgres_changes",f("room_answers","room_id"),()=>refresh())
     .subscribe();
-  refresh();
+  clearInterval(poll);poll=setInterval(()=>refresh(),2500);
+  refresh(true);
 }
 
-async function refresh(){
+async function refresh(force){
   if(!room)return;
   const rid=room.id;
   const [a,b,c]=await Promise.all([
@@ -99,12 +100,14 @@ async function refresh(){
   if(!room||room.id!==rid)return;
   if(!a.data){dropLocal();showToast("Otaq bağlandı.");return;}
   room=a.data;players=b.data||[];answers=c.data||[];
-  draw();
+  const sig=JSON.stringify([room.status,room.q_index,room.owner,players,answers]);
+  if(sig===lastSig&&!force)return;
+  lastSig=sig;draw();
 }
 
 function dropLocal(){
   if(chan)sb().removeChannel(chan);
-  chan=null;room=null;players=[];answers=[];clearInterval(tick);viewMenu();
+  chan=null;room=null;players=[];answers=[];clearInterval(tick);clearInterval(poll);viewMenu();
 }
 async function leave(){
   const id=room&&room.id;
@@ -141,7 +144,7 @@ function viewLobby(){
   $("mpCopy").onclick=()=>copy(room.code,"Kod kopyalandı");
   $("mpLink").onclick=()=>copy(link,"Link kopyalandı");
   $("mpLeave").onclick=leave;
-  if($("mpReady"))$("mpReady").onclick=()=>sb().rpc("set_ready",{p_room:room.id,p_ready:!me.ready});
+  if($("mpReady"))$("mpReady").onclick=async()=>{const r=await sb().rpc("set_ready",{p_room:room.id,p_ready:!me.ready});if(r.error){showToast(errMsg(r.error));console.error(r.error);}refresh(true);};
   if($("mpStart"))$("mpStart").onclick=startGame;
   if(owner&&room.quick&&players.length>=2&&players.every(p=>p.ready)&&!starting)startGame();
 }
