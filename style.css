@@ -1,0 +1,98 @@
+
+/* ENGAZ ANIMATION SYSTEM */
+
+.word-box{
+animation: cardEnter .45s cubic-bezier(.2,.8,.2,1);
+}
+
+@keyframes cardEnter{
+from{opacity:0;transform:translateY(18px) scale(.97)}
+to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.lesson-card,.level,.achievement,.card{
+transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+
+.lesson-card:hover,.card:hover{
+transform:translateY(-4px);
+border-color:var(--purple);
+box-shadow:0 8px 25px #0003;
+}
+
+.answer{
+transition:all .2s;
+}
+
+.answer:hover:not(:disabled){
+border-color:var(--green);
+transform:translateX(5px);
+}
+
+.answer.correct{
+animation:correctPulse .4s ease;
+}
+
+.answer.wrong{
+animation:wrongShake .35s ease;
+}
+
+@keyframes correctPulse{
+50%{transform:scale(1.025)}
+}
+
+@keyframes wrongShake{
+25%{transform:translateX(-5px)}
+50%{transform:translateX(5px)}
+75%{transform:translateX(-3px)}
+}
+
+#xp{
+transition:transform .3s;
+}
+
+.xp-pop{
+animation:xpPop .5s ease;
+}
+
+@keyframes xpPop{
+50%{transform:scale(1.3);color:#fff}
+}
+
+.screen.active{
+animation:screenEnter .35s ease;
+}
+
+@keyframes screenEnter{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+.confetti{
+position:fixed;
+top:-15px;
+width:9px;
+height:13px;
+z-index:30;
+pointer-events:none;
+animation:confettiFall 2.5s linear forwards;
+}
+
+@keyframes confettiFall{
+to{
+transform:translateY(105vh) rotate(720deg);
+opacity:0;
+}
+}
+
+button:focus-visible{
+outline:2px solid var(--green);
+outline-offset:3px;
+}
+
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{
+animation-duration:.01ms!important;
+transition-duration:.01ms!important;
+}
+}
